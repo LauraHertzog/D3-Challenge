@@ -6,9 +6,9 @@ var svgHeight = 500;
 
 var margin = {
     top: 20, 
-    right: 60,
-    bottom: 140,
-    left: 120
+    right: 40,
+    bottom: 60,
+    left: 100
 };
 
 var width = svgWidth - margin.left - margin.right; 
@@ -35,11 +35,11 @@ d3.csv("assets/data/data.csv").then(function(USCensusData) {
 
     //Create Scale Functions
     var xLinearScale = d3.scaleLinear()
-        .domain([20, d3.max(USCensusData, d => d.poverty)])
+        .domain([d3.min(USCensusData, d => d.poverty) - 1 , d3.max(USCensusData, d => d.poverty)])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(USCensusData, d => d.healthcare)])
+        .domain([d3.min(USCensusData, d => d.healthcare) - 1, d3.max(USCensusData, d => d.healthcare)])
         .range([height, 0]); 
 
     //create axis functions
@@ -97,7 +97,7 @@ var textGroup = chartGroup.selectAll(null)
 //Initialize tool tip
  var toolTip = d3.tip()
     .attr("class", "toolTip")
-    .offset([80, -60])
+    //.offset([80, -60])
     .html(function(d) {
         return (`${d.state}<br>In Poverty: ${d.poverty}<br>Lacks Healthcare: ${d.healthcare}`);
     });
@@ -116,7 +116,7 @@ circlesGroup.on("click", function(data) {
 chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left + 40)
-    .attr("x", 0 - (height/2))
+    .attr("x", 0 - (height/2) -50)
     .attr("dy", "1em")
     .attr("class", "axisText")
     .attr("Title");
