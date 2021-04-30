@@ -75,24 +75,8 @@ var textGroup = chartGroup.selectAll(null)
     .attr("class", "stateabbr")
     .attr("x", d=>xLinearScale(d.poverty))
     .attr("y", d=>yLinearScale(d.healthcare))
+    .attr("text-anchor", "middle")
     .text(d => d.abbr);
-
-// chartGroup.append("g")
-//     .selectAll(`text`)
-//     .data(USCensusData)
-//     .enter()
-//     .append("text")
-//     .text(d=>d.abbr)
-//     .attr("x", d=>xLinearScale(d.poverty))
-//     .attr("y", d=>yLinearScale(d.healthcare))
-//     .attr("dx", "d => -7.5")
-//     .attr("dy", "d => 4")
-//     .attr("fill", "white")
-//     .attr("font-size", "10px")
-//     .attr("font-weight", "bold")
-//     .attr("fill", "#ffffff")
-
-
 
 //Initialize tool tip
  var toolTip = d3.tip()
