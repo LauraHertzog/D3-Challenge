@@ -18,7 +18,7 @@ var height = svgHeight - margin.top - margin.bottom;
 var svg = d3.select("#scatter")
     .append("svg")
     .attr("width", svgWidth)
-    .attr("heigh", svgHeight); 
+    .attr("height", svgHeight); 
 
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`); 
@@ -61,8 +61,8 @@ d3.csv("assets/data/data.csv").then(function(USCensusData) {
     .data(USCensusData)
     .enter()
     .append("circle")
-    .attr("cx", d => xLinearScale(d.healthcare))
-    .attr("cy", d => yLinearScale(d.poverty))
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "15")
     .attr("fill", "pink")
     .attr("opacity", ".75"); 
@@ -106,12 +106,20 @@ var textGroup = chartGroup.selectAll(null)
 chartGroup.call(toolTip);
 
 //Event listeners to display and hide the tooltip
-circlesGroup.on("click", function(data) {
+circlesGroup.on("mouseover", function(data) {
     toolTip.show(data, this); 
 })
     .on("mouseout", function(data, index) {
         toolTip.hide(data); 
     });
+
+textGroup.on("mouseover", function(data) {
+    toolTip.show(data, this); 
+})
+    .on("mouseout", function(data, index) {
+        toolTip.hide(data); 
+
+}); 
 
 chartGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -119,10 +127,10 @@ chartGroup.append("text")
     .attr("x", 0 - (height/2) -50)
     .attr("dy", "1em")
     .attr("class", "axisText")
-    .attr("Title");
+    .attr("Lacks Healthcare (%)");
 
-// chartGroup.append("text")
-//     .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
-//     .attr("class", "axisText")
-//     .attr("Title");   
-} )
+chartGroup.append("text")
+    .attr("transform", `translate(${(width / 2) -50}, ${height + margin.top + 30})`)
+    .attr("class", "axisText")
+    .attr("In Poverty (%)");   
+});
